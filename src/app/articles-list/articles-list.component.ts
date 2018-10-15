@@ -17,7 +17,7 @@ export class ArticlesListComponent implements OnInit {
 
   ngOnInit() {
     // Récupération des articles à partir du local storage
-    this.articles = this.service.getFromLocalStorage();
+    this.articles = this.service.articles;
     // Initialisation du model de donnée
     this.article = new Article();
   }
