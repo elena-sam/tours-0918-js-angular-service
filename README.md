@@ -1,27 +1,40 @@
-# AngularServices
+# Angular-Services
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
+Dans cet atelier nous allons utiliser comme exemple une application de gestion d'article.
+L'application affiche un tableau d'article où vous pouvez ajouter et supprimé des article.
+Un autre tableau affiche les articles supprimés où vous avez la possibilité de restaurer un article supprimé.
 
-## Development server
+L'application est composée de trois components :
+* `ArticleListComponent` : tableau pour l'affichage des articles disponnibles
+* `ArticleListDeletedComponent` : tableau pour l'affichage des articles supprimés
+* `NavbarComponent` : barre de menu pour la navigation entre les components `ArticleListComponent` et `ArticleListDeletedComponent`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Prérequis
 
-## Code scaffolding
+* Cloner le repository
+* `npm install` a la racine du projet
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Partie 1
 
-## Build
+**On ne tient pas compte du component `ArticleListDeletedComponent` dans cette première partie**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Actuelement le component `ArticleListComponent` manipule un tableau d'article en ajoutant, supprimant des articles.
+Il est préférable de déporter toutes manipulation de tableau, de localStorage etc dans un `Service`.
 
-## Running unit tests
+* Créer un service nommé `ArticleService` dans le répertoire `common`.
+* Injecter le service `ArticleService` dans le component `ArticleListComponent`.
+* Déporté toutes la logique de gestion des articles dans `ArticleService`
+* Refactoré `ArticleListComponent` afin qu'il n'y est plus aucun `push`, `slice`, `findIndex`, `localStorage`, `JSON` etc dans ce component.
+* La manipultation d'article (`push`, `slice` ...) dans le component `ArticleListComponent` doit uniquement se faire à travers le service `ArticleService`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Partie 2
 
-## Running end-to-end tests
+Le component `ArticleListDeletedComponent` n'est pas opérationel, aucun article supprimé n'est affiché dans le tableau donc il nous est impossible de restaurer un article supprimé par erreur.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+* Injecter le service `ArticleService` dans le component `ArticleListDeletedComponent`.
+* codé la **récupération** des articles supprimés
+* codé la **restauration** des articles supprimés
 
-## Further help
+**Attention il a peut être d'autre chose a corriger dans le component `ArticleListComponent` et `ArticleListDeletedComponent` ;)**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Keep Calm and Carry On !
