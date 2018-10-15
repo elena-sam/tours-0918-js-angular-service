@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../common/article';
+import { ArticleService } from '../common/article.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -12,22 +13,22 @@ export class ArticlesListComponent implements OnInit {
   // Liste des articles disponnible
   articles: Article[];
 
-  constructor() {}
+  constructor(private service: ArticleService) {}
 
   ngOnInit() {
     // Récupération des articles à partir du local storage
-    this.articles = this.getFromLocalStorage();
+    this.articles = this.service.getFromLocalStorage();
     // Initialisation du model de donnée
     this.article = new Article();
   }
 
   /**
-   * Création d'un nouvel article et ajout au tableau
-   * @param article Nouvelle article
+   * Création d'un nouvel article
+   * @param article Nouvel article
    */
   createArticle(article) {
     // Ajout de l'article à la liste des articles
-    this.articles.push(article);
+    this.service.create(article);
     // Réinitialisation du model
     this.article = new Article();
   }
@@ -37,21 +38,6 @@ export class ArticlesListComponent implements OnInit {
    * @param article Article à supprimer
    */
   deleteArticle(article: Article) {
-    // Récupération de l'index de l'article à supprimer
-    const index = this.articles.findIndex( x => x.id === article.id);
-    // Suppréssion de l'article du tableau
-    this.articles.splice(index, 1);
-  }
-
-  /**
-   * Récupération du tableau d'articles stocké dans le local storage
-   */
-  getFromLocalStorage(): Article[] {
-    // Récupération des artciles en format 'string'
-    const stringData = localStorage.getItem('articles');
-    // Converstion des données de type 'string' en objet Javascript
-    const articles: Article[] = JSON.parse(stringData);
-
-    return articles;
+    this.service.delete(article);
   }
 }
